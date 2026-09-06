@@ -1,10 +1,9 @@
+import './App.css';
 
 function App() {
   return (
-
-        <p>
-          React Abi Kathy Gaspar
-        </p>
+    <div className="App">
+    </div>
 
   );
 }
