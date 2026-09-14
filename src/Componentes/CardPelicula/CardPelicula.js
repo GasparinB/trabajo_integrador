@@ -1,9 +1,13 @@
 import React, { Component } from 'react';
-import { withRouter, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import Cookies from 'universal-cookie';
+
+const cookies = new Cookies();
 
 class CardPelicula extends Component {
     constructor(props) {
         super(props);
+
         this.state = {
             mostrarDescripcion: false,
             favorito: false
@@ -11,10 +15,10 @@ class CardPelicula extends Component {
     }
 
     componentDidMount() {
-        const favoritos = JSON.parse(localStorage.getItem('favoritos'));
+        const favoritos = JSON.parse(localStorage.getItem('favoritosPeliculas'));
 
         if (favoritos !== null) {
-            this.setState({ favorito: favoritos.includes(this.props.pelicula.id) });
+            this.setState({ favorito: favoritos.includes(this.props.id) });
         }
     }
 
@@ -23,53 +27,54 @@ class CardPelicula extends Component {
     }
 
     agregarAFavoritos = (id) => {
-        const favoritos = JSON.parse(localStorage.getItem('favoritos'));
+        const favoritos = JSON.parse(localStorage.getItem('favoritosPeliculas'));
 
         if (favoritos !== null) {
             if (!favoritos.includes(id)) {
                 favoritos.push(id);
             }
-            const guardarFavoritos = JSON.stringify(favoritos);
-            localStorage.setItem('favoritos', guardarFavoritos);
+            let guardarFavoritos = JSON.stringify(favoritos);
+            localStorage.setItem('favoritosPeliculas', guardarFavoritos);
         } else {
-            const primerFavorito = [id];
-            const guardarFavoritos = JSON.stringify(primerFavorito);
-            localStorage.setItem('favoritos', guardarFavoritos);
+            let primerFavorito = [id];
+            let guardarFavoritos = JSON.stringify(primerFavorito);
+            localStorage.setItem('favoritosPeliculas', guardarFavoritos);
         }
 
         this.setState({ favorito: true });
     }
 
     sacarDeFavoritos = (id) => {
-        const favoritos = JSON.parse(localStorage.getItem('favoritos'));
+        const favoritos = JSON.parse(localStorage.getItem('favoritosPeliculas'));
 
         if (favoritos !== null) {
-            const nuevosFavoritos = favoritos.filter(favoritoId => favoritoId !== id);
-            const guardarFavoritos = JSON.stringify(nuevosFavoritos);
-            localStorage.setItem('favoritos', guardarFavoritos);
+            let nuevosFavoritos = favoritos.filter(favoritoId => favoritoId !== id);
+            let guardarFavoritos = JSON.stringify(nuevosFavoritos);
+            localStorage.setItem('favoritosPeliculas', guardarFavoritos);
         }
         this.setState({ favorito: false });
     }
 
     render() {
+        let usuarioLogueado = cookies.get('auth-user');
+
         return (
             <article className='pelicula-card'>
                 <img src={this.props.image} alt={this.props.title} />
                 <h2>{this.props.title}</h2>
                 <button className='verMas' onClick={this.mostrarDescripcion}>
-                    {this.state.mostrarDescripcion ? 'Ver Menos' : 'Ver Más'}
+                    {this.state.mostrarDescripcion ? 'Ocultar descripción' : 'Ver descripción'}
                 </button>
                 <p className={this.state.mostrarDescripcion ? 'mostrar' : 'ocultar'}>{this.props.description}</p>
-                <Link className='detail-button' to={`/detalle/${this.props.id}`}>Ver detalle</Link>
-                {this.state.favorito ? (
+                <Link className='detail-button' to={`/detalle/pelicula/${this.props.id}`}>Ver detalle</Link>
+                {usuarioLogueado !== undefined && (this.state.favorito ? (
                     <button onClick={() => this.sacarDeFavoritos(this.props.id)}>Sacar de favoritos</button>
                 ) : (
-                    <button onClick={() => this.agregarAFavoritos(this.props.id)}>Agregar a favoritos</button>
-                )
-                }
-
+                    <button onClick={() => this.agregarAFavoritos(this.props.id)}>Agregar a favoritos</button>)
+                )}
             </article>
-        )
+        );
     }
-
 }
+
+export default CardPelicula;

@@ -90,3 +90,123 @@ nav {
         grid-template-columns: 1fr;
     }
 }
+
+/* HOME */
+
+main {
+    padding: 30px;
+}
+
+.home-grupo {
+    margin: 40px 0;
+}
+
+.titulo-seccion {
+    margin-bottom: 20px;
+    font-size: 26px;
+}
+
+
+/* CONTENEDOR PELICULAS / SERIES */
+
+.peliculas-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+
+/* CARDS */
+
+.pelicula-card {
+    width: 23%;
+    padding: 15px;
+
+    background-color: white;
+
+    border: 1px solid #ddd;
+    border-radius: 8px;
+}
+
+.pelicula-card img {
+    width: 100%;
+    height: 320px;
+
+    object-fit: cover;
+
+    border-radius: 5px;
+}
+
+.pelicula-card h2 {
+    margin: 12px 0;
+    font-size: 18px;
+}
+
+
+/* DESCRIPCION */
+
+.ocultar {
+    display: none;
+}
+
+.mostrar {
+    display: block;
+}
+
+
+/* BOTONES */
+
+.pelicula-card button {
+    margin: 8px 5px 8px 0;
+    padding: 7px 12px;
+
+    cursor: pointer;
+}
+
+.detail-button {
+    display: inline-block;
+
+    margin: 8px 5px 8px 0;
+    padding: 7px 12px;
+
+    color: black;
+
+    border: 1px solid #999;
+    border-radius: 3px;
+
+    text-decoration: none;
+}
+
+
+/* VER TODAS */
+
+.ver-todas {
+    display: inline-block;
+
+    margin-top: 20px;
+    padding: 8px 15px;
+
+    color: black;
+
+    border: 1px solid #999;
+    border-radius: 4px;
+
+    text-decoration: none;
+}
+
+
+/* RESPONSIVE */
+
+@media (max-width: 900px) {
+
+    .pelicula-card {
+        width: 48%;
+    }
+}
+
+@media (max-width: 600px) {
+
+    .pelicula-card {
+        width: 100%;
+    }
+}

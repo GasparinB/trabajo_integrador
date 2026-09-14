@@ -1,8 +1,8 @@
 import { Route, Switch } from 'react-router-dom';
 
+import Home from './Screens/Home/Home';
 import CrearCuenta from './Screens/CrearCuenta/CrearCuenta';
 import Favoritos from './Screens/Favoritos/Favoritos';
-import Home from './Screens/Home/Home';
 
 function App() {
   return (
