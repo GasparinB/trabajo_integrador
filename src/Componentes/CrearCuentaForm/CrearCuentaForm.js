@@ -33,7 +33,6 @@ class CrearCuentaForm extends Component{
     /*me faltan hacer las validaciones y guardar los datos con LocalStorage */
     render() {
         return(
-            <>
                 <div class="row justify-content-center">
                     <div class="col-md-6">
                         <form onSubmit={this.submit}>
@@ -50,7 +49,6 @@ class CrearCuentaForm extends Component{
                         <p class="mt-3 text-center">¿Ya tenés cuenta? <a href="login.html">Iniciar sesión</a></p>
                     </div>
                 </div>
-            </>
         )
     }
 }
