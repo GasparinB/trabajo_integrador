@@ -102,8 +102,9 @@ class Favorito extends Component {
         {this.state.loading ? (
           <p>Cargando favoritos...</p>
         ) : (
-          <div>
+          <div className="favoritosContainer">
             {/* PELÍCULAS */}
+            <div className="ListadoFavoritos">
             <h2 className="alert alert-primary">
               Películas favoritas
             </h2>
@@ -153,7 +154,9 @@ class Favorito extends Component {
                 ))
               )}
             </section>
+            </div>
             {/* SERIES */}
+            <div className="ListadoFavoritos">
             <h2 className="alert alert-warning">
               Series favoritas
             </h2>
@@ -203,6 +206,7 @@ class Favorito extends Component {
                 ))
               )}
             </section>
+          </div>
           </div>
         )}
       </div>
