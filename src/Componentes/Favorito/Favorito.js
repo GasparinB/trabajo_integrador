@@ -1,214 +1,173 @@
 import React, { Component } from 'react';
 import './Favorito.css';
+import CardPelicula from '../CardPelicula/CardPelicula';
+import CardSeries from '../CardSeries/CardSeries';
+import Cookies from 'universal-cookie';
+
+const cookies = new Cookies();
+const token = 'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJlYjgwNDM1YTlmNmY2ODhjYTI2NGE0YmM3ZmM2NjE4NyIsIm5iZiI6MTc4ODc5MTEyNi4yMjMsInN1YiI6IjZhOWVjOTU2MWRmYjExOWJiZTE0NDRkNyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.fNwSmD2dtb7WrrbApwqjIzh_3rP9QsFLDo4sVwxP8nw';
+const options = {
+  method: 'GET',
+  headers: {
+    accept: 'application/json',
+    Authorization: 'Bearer ' + token
+  }
+};
 
 class Favorito extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      favoritos: [],
+      peliculasFavoritas: [],
+      seriesFavoritas: [],
       loading: true
     };
   }
+
   componentDidMount() {
-    const storage = JSON.parse(localStorage.getItem('favoritos'));
-    if (storage === null || storage.length === 0) {
-      this.setState({
-        loading: false
-      });
-    } else {
-      let cargados = 0;
-      storage.forEach((favorito) => {
-        let url = "";
-        if (favorito.tipo === "pelicula") {
-          url = `URL_DE_TU_API_DE_PELICULAS/${favorito.id}`;
-        } else if (favorito.tipo === "serie") {
-          url = `URL_DE_TU_API_DE_SERIES/${favorito.id}`;
-        }
-        if (url !== "") {
-          fetch(url)
-            .then((response) => response.json())
-            .then((data) => {
-              data.tipo = favorito.tipo;
-              this.setState((prevState) => ({
-                favoritos: [
-                  ...prevState.favoritos,
-                  data
-                ]
-              }));
-            })
-            .catch((error) => {
-              console.error(
-                "Error al cargar favorito:",
-                error
-              );
-            })
-            .then(() => {
-              cargados++;
-              if (cargados === storage.length) {
-                this.setState({
-                  loading: false
-                });
-              }
-            });
-        } else {
-          cargados++;
-          if (cargados === storage.length) {
-            this.setState({
-              loading: false
-            });
-          }
-        }
-      });
-    }
+    this.cargarFavoritos();
   }
 
-  eliminarFavorito = (id, tipo) => {
-    this.setState((prevState) => ({
-      favoritos: prevState.favoritos.filter(
-        (favorito) =>
-          !(favorito.id === id && favorito.tipo === tipo)
-      )
-    }));
+  obtenerIdsGuardados = (nombreStorage) => {
+    const favoritos = JSON.parse(localStorage.getItem(nombreStorage)) || [];
 
-    const storage = JSON.parse(
-      localStorage.getItem('favoritos')
-    );
+    const idsFavoritos = favoritos
+      .filter(favorito => favorito !== null)
+      .map(favorito => favorito.id !== undefined ? favorito.id : favorito)
+      .filter(id => id !== undefined && id !== null);
 
-    if (storage !== null) {
-      const favoritosActualizados = storage.filter(
-        (favorito) =>
-          !(favorito.id === id && favorito.tipo === tipo)
-      );
-      localStorage.setItem(
-        'favoritos',
-        JSON.stringify(favoritosActualizados)
-      );
+    localStorage.setItem(nombreStorage, JSON.stringify(idsFavoritos));
 
+    return idsFavoritos;
+  }
+
+  cargarFavoritos = () => {
+    const favoritosPeliculas = this.obtenerIdsGuardados('favoritosPeliculas');
+    const favoritosSeries = this.obtenerIdsGuardados('favoritosSeries');
+    const totalPedidos = favoritosPeliculas.length + favoritosSeries.length;
+    let pedidosTerminados = 0;
+
+    this.setState({
+      peliculasFavoritas: [],
+      seriesFavoritas: [],
+      loading: totalPedidos > 0
+    });
+
+    if (totalPedidos === 0) {
+      return;
     }
 
-  };
+    const revisarFinDeCarga = () => {
+      pedidosTerminados++;
+
+      if (pedidosTerminados === totalPedidos) {
+        this.setState({ loading: false });
+      }
+    };
+
+    favoritosPeliculas.map(id => {
+      fetch(`https://api.themoviedb.org/3/movie/${id}?language=es-ES`, options)
+        .then(response => response.json())
+        .then(data => {
+          if (data.id !== undefined) {
+            this.setState(prevState => ({
+              peliculasFavoritas: [...prevState.peliculasFavoritas, data]
+            }));
+          } else {
+            console.log('No se pudo cargar la pelicula favorita', id, data);
+          }
+          revisarFinDeCarga();
+        })
+        .catch(error => {
+          console.log(error);
+          revisarFinDeCarga();
+        });
+
+      return null;
+    });
+
+    favoritosSeries.map(id => {
+      fetch(`https://api.themoviedb.org/3/tv/${id}?language=es-ES`, options)
+        .then(response => response.json())
+        .then(data => {
+          if (data.id !== undefined) {
+            this.setState(prevState => ({
+              seriesFavoritas: [...prevState.seriesFavoritas, data]
+            }));
+          } else {
+            console.log('No se pudo cargar la serie favorita', id, data);
+          }
+          revisarFinDeCarga();
+        })
+        .catch(error => {
+          console.log(error);
+          revisarFinDeCarga();
+        });
+
+      return null;
+    });
+  }
+
+  quitarPeliculaFavorita = (id) => {
+    this.setState({
+      peliculasFavoritas: this.state.peliculasFavoritas.filter(pelicula => pelicula.id !== id)
+    });
+  }
+
+  quitarSerieFavorita = (id) => {
+    this.setState({
+      seriesFavoritas: this.state.seriesFavoritas.filter(serie => serie.id !== id)
+    });
+  }
 
   render() {
-    const peliculas = this.state.favoritos.filter(
-      (favorito) => favorito.tipo === "pelicula"
-    );
+    const usuarioLogueado = cookies.get('auth-user');
 
-    const series = this.state.favoritos.filter(
-      (favorito) => favorito.tipo === "serie"
-    );
+    if (usuarioLogueado === undefined) {
+      return <p>Tenés que iniciar sesión para ver tus favoritos.</p>;
+    }
+
+    if (this.state.loading) {
+      return <p>Cargando favoritos...</p>;
+    }
 
     return (
-      <div className="container">
-        {this.state.loading ? (
-          <p>Cargando favoritos...</p>
-        ) : (
-          <div className="favoritosContainer">
-            {/* PELÍCULAS */}
-            <div className="ListadoFavoritos">
-            <h2 className="alert alert-primary">
-              Películas favoritas
-            </h2>
-            <section className="row cards">
-              {peliculas.length === 0 ? (
-                <p>No hay películas favoritas.</p>
-              ) : (
-                peliculas.map((pelicula) => (
-                  <article
-                    className="single-card-movie"
-                    key={pelicula.id}
-                  >
-                    <img
-                      src={
-                        "https://image.tmdb.org/t/p/w500" +
-                        pelicula.poster_path
-                      }
-                      className="card-img-top"
-                      alt={pelicula.title}
-                    />
-                    <div className="cardBody">
-                      <h5 className="card-title">
-                        {pelicula.title}
-                      </h5>
-                      <p className="card-text">
-                        {pelicula.overview}
-                      </p>
-                      <a
-                        href={`/movie/${pelicula.id}`}
-                        className="btn btn-primary"
-                      >
-                        Ver más
-                      </a>
-                      <button
-                        className="btn alert-info"
-                        onClick={() =>
-                          this.eliminarFavorito(
-                            pelicula.id,
-                            "pelicula"
-                          )
-                        }
-                      >
-                        Eliminar ♥️
-                      </button>
-                    </div>
-                  </article>
-                ))
-              )}
-            </section>
-            </div>
-            {/* SERIES */}
-            <div className="ListadoFavoritos">
-            <h2 className="alert alert-warning">
-              Series favoritas
-            </h2>
-            <section className="row cards">
-              {series.length === 0 ? (
-                <p>No hay series favoritas.</p>
-              ) : (
-                series.map((serie) => (
-                  <article
-                    className="single-card-tv"
-                    key={serie.id}
-                  >
-                    <img
-                      src={
-                        "https://image.tmdb.org/t/p/w500" +
-                        serie.poster_path
-                      }
-                      className="card-img-top"
-                      alt={serie.name}
-                    />
-                    <div className="cardBody">
-                      <h5 className="card-title">
-                        {serie.name}
-                      </h5>
-                      <p className="card-text">
-                        {serie.overview}
-                      </p>
-                      <a
-                        href={`/serie/${serie.id}`}
-                        className="btn btn-primary"
-                      >
-                        Ver más
-                      </a>
-                      <button
-                        className="btn alert-warning"
-                        onClick={() =>
-                          this.eliminarFavorito(
-                            serie.id,
-                            "serie"
-                          )
-                        }
-                      >
-                        Eliminar ♥️
-                      </button>
-                    </div>
-                  </article>
-                ))
-              )}
-            </section>
-          </div>
-          </div>
-        )}
+      <div className="ListadoFavoritos">
+        <h2>Películas favoritas</h2>
+        <section className="favoritosContainer">
+          {this.state.peliculasFavoritas.length > 0 ? (
+            this.state.peliculasFavoritas.map(pelicula => (
+              <CardPelicula
+                key={pelicula.id}
+                id={pelicula.id}
+                title={pelicula.title}
+                image={pelicula.poster_path !== null ? `https://image.tmdb.org/t/p/w500${pelicula.poster_path}` : ''}
+                description={pelicula.overview !== '' ? pelicula.overview : 'Descripción no disponible.'}
+                onRemoveFavorito={this.quitarPeliculaFavorita}
+              />
+            ))
+          ) : (
+            <p>No tenés películas favoritas.</p>
+          )}
+        </section>
+
+        <h2>Series favoritas</h2>
+        <section className="favoritosContainer">
+          {this.state.seriesFavoritas.length > 0 ? (
+            this.state.seriesFavoritas.map(serie => (
+              <CardSeries
+                key={serie.id}
+                id={serie.id}
+                title={serie.name}
+                image={serie.poster_path !== null ? `https://image.tmdb.org/t/p/w500${serie.poster_path}` : ''}
+                description={serie.overview !== '' ? serie.overview : 'Descripción no disponible.'}
+                onRemoveFavorito={this.quitarSerieFavorita}
+              />
+            ))
+          ) : (
+            <p>No tenés series favoritas.</p>
+          )}
+        </section>
       </div>
     );
   }

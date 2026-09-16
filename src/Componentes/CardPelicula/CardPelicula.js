@@ -18,7 +18,10 @@ class CardPelicula extends Component {
         const favoritos = JSON.parse(localStorage.getItem('favoritosPeliculas'));
 
         if (favoritos !== null) {
-            this.setState({ favorito: favoritos.includes(this.props.id) });
+            let idsFavoritos = favoritos.map(favorito => favorito !== null && favorito.id !== undefined ? favorito.id : favorito);
+            this.setState({
+                favorito: idsFavoritos.includes(this.props.id) || idsFavoritos.includes(String(this.props.id))
+            });
         }
     }
 
@@ -48,11 +51,17 @@ class CardPelicula extends Component {
         const favoritos = JSON.parse(localStorage.getItem('favoritosPeliculas'));
 
         if (favoritos !== null) {
-            let nuevosFavoritos = favoritos.filter(favoritoId => favoritoId !== id);
+            let nuevosFavoritos = favoritos.filter(favorito => {
+                let favoritoId = favorito !== null && favorito.id !== undefined ? favorito.id : favorito;
+                return favoritoId !== id && favoritoId !== String(id);
+            });
             let guardarFavoritos = JSON.stringify(nuevosFavoritos);
             localStorage.setItem('favoritosPeliculas', guardarFavoritos);
         }
         this.setState({ favorito: false });
+        if (this.props.onRemoveFavorito !== undefined) {
+            this.props.onRemoveFavorito(id);
+        }
     }
 
     render() {

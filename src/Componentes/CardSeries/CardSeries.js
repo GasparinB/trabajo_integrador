@@ -18,8 +18,9 @@ class CardSeries extends Component {
         const favoritos = JSON.parse(localStorage.getItem('favoritosSeries'));
 
         if (favoritos !== null) {
+            let idsFavoritos = favoritos.map(favorito => favorito !== null && favorito.id !== undefined ? favorito.id : favorito);
             this.setState({
-                favorito: favoritos.includes(this.props.id)
+                favorito: idsFavoritos.includes(this.props.id) || idsFavoritos.includes(String(this.props.id))
             });
         }
     }
@@ -55,9 +56,10 @@ class CardSeries extends Component {
         );
 
         if (favoritos !== null) {
-            let nuevosFavoritos = favoritos.filter(
-                favoritoId => favoritoId !== id
-            );
+            let nuevosFavoritos = favoritos.filter(favorito => {
+                let favoritoId = favorito !== null && favorito.id !== undefined ? favorito.id : favorito;
+                return favoritoId !== id && favoritoId !== String(id);
+            });
             let guardarFavoritos =JSON.stringify(nuevosFavoritos);
             localStorage.setItem('favoritosSeries',guardarFavoritos);
         }
@@ -65,6 +67,9 @@ class CardSeries extends Component {
         this.setState({
             favorito: false
         });
+        if (this.props.onRemoveFavorito !== undefined) {
+            this.props.onRemoveFavorito(id);
+        }
     }
 
     render() {
