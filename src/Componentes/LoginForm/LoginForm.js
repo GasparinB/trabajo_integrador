@@ -36,7 +36,7 @@ class LoginForm extends Component{
             let usersParseado = JSON.parse(usersStorage);
             let usersFiltrado = usersParseado.filter((user) => user.email === this.state.email)
 
-            if (usersFiltrado.length = 0) {
+            if (usersFiltrado.length === 0) {
                 this.setState({ error: 'Credenciales incorrectas' });
                 return;
             } else {
