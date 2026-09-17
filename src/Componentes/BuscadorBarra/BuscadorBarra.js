@@ -16,7 +16,10 @@ class BuscadorBarra extends Component {
     }
     ejecutarBusqueda(event) {
         event.preventDefault();
-        this.props.history.push('/search/' + this.state.busqueda);
+
+        if (this.state.busqueda !== '') {
+            this.props.history.push('/search/' + this.state.busqueda);
+        }
     }
 
     render() {
@@ -25,7 +28,7 @@ class BuscadorBarra extends Component {
                 <form className="search-form" onSubmit={(event) => this.ejecutarBusqueda(event)}>
                     <label>Buscador</label>
                     <input  type="text" placeholder="Ingresá una película/serie..." onChange={(event) => this.guardarEstado(event)}  value={this.state.busqueda}/>
-                    <input className="search-button"  type="submit" value="Buscar" onClick={(event) => this.ejecutarBusqueda(event)}/>
+                    <input className="search-button" type="submit" value="Buscar" />
                 </form>
             </div>
         );

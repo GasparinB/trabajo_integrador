@@ -25,10 +25,10 @@ class DetallePelicula extends Component {
                 this.setState({ pelicula: data.results });
             })
             .catch(error => console.log(error));
-        
+
     }
 
-    
+
 
     render() {
         <div>
@@ -40,4 +40,4 @@ class DetallePelicula extends Component {
 
 }
 
-export default DetallePelicula
+export default DetallePelicula;
