@@ -29,8 +29,8 @@ componentDidMount() {
             .then(response => response.json())
             .then(data => {
                 if (data.results !== undefined) {
-                    this.setState(prevState => ({
-                        peliculas: [...prevState.peliculas, ...data.results]
+                    this.setState(({
+                        peliculas: this.state.peliculas.concat(data.results)
                     }));
                 } else {
                     console.log('No se pudieron cargar peliculas', data);
@@ -41,7 +41,7 @@ componentDidMount() {
 
   cargarMasPeliculas = () => {
     this.setState(
-      prevState => ({ pagina: prevState.pagina + 1 }),
+      ({ pagina: this.state.pagina + 1 }),
       () => {
         this.cargarPeliculas();
       }

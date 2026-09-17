@@ -34,8 +34,8 @@ class CategoriaSeries extends Component {
         fetch(url, options)
             .then(response => response.json())
             .then(data => {
-                this.setState(prevState => ({
-                    series: [...prevState.series, ...data.results]
+                this.setState(({
+                    series: this.state.series.concat(data.results)
                 }));
             })
             .catch(error => console.log(error));
@@ -43,7 +43,7 @@ class CategoriaSeries extends Component {
 
   cargarMasSeries = () => {
     this.setState(
-      prevState => ({ pagina: prevState.pagina + 1 }),
+      ({ pagina: this.state.pagina + 1 }),
       () => {
         this.cargarSeries();
       }

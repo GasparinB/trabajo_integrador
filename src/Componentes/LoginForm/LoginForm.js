@@ -14,14 +14,14 @@ class LoginForm extends Component{
         }
     }
     controlarEmail(e) {
-        this.setState({ 
+        this.setState({
             email:e.target.value,
 
          });
     };
 
     controlarPass(e) {
-        this.setState({ 
+        this.setState({
             password:e.target.value
 
          });
@@ -36,7 +36,7 @@ class LoginForm extends Component{
             let usersParseado = JSON.parse(usersStorage);
             let usersFiltrado = usersParseado.filter((user) => user.email === this.state.email)
 
-            if (usersFiltrado.length < 0) {
+            if (usersFiltrado.length = 0) {
                 this.setState({ error: 'Credenciales incorrectas' });
                 return;
             } else {
@@ -51,11 +51,11 @@ class LoginForm extends Component{
 
                     this.props.history.push('/')
 
-                }   
+                }
             }
         }
 
-        
+
     }
 
     render() {
@@ -77,7 +77,7 @@ class LoginForm extends Component{
                         <p class="mt-3 text-center">¿No tenés cuenta? <Link to="/register">Registrarse</Link></p>
                     </div>
                 </div>
-         )  
+         )
      }
 }
 
