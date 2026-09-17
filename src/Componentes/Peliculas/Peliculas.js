@@ -45,9 +45,7 @@ class Peliculas extends Component {
 
     render() {
         return(
-            <div className="peliculas-container">
-                {this.topPopularMovies()}
-            </div>
+            <div className="peliculas-container">{this.topPopularMovies()}</div>
         );
     }
 }
