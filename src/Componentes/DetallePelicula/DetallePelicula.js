@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import CardDetallePeli from '../CardDetallePeli/CardDetallePeli';
+import { withRouter } from 'react-router-dom/cjs/react-router-dom.min';
 
 class DetallePelicula extends Component {
     constructor(props) {
@@ -9,7 +10,7 @@ class DetallePelicula extends Component {
         }
     }
     componentDidMount() {
-        const movieId = this.props.id
+        const movieId = this.props.match.params.id
         const url = 'https://api.themoviedb.org/3/movie/' + movieId;
         const options = {
             method: 'GET',
@@ -22,7 +23,7 @@ class DetallePelicula extends Component {
         fetch(url, options)
             .then(response => response.json())
             .then(data => {
-                this.setState({ pelicula: data.results });
+                this.setState({ pelicula: data});
             })
             .catch(error => console.log(error));
 
@@ -31,10 +32,15 @@ class DetallePelicula extends Component {
 
 
     render() {
+        const { pelicula } = this.state;
+        if (!pelicula) {
+            return <p>Cargando...</p>;
+        }
+
         return (
             <div>
-                <h2 class="alert alert-primary">{this.state.pelicula.title}</h2>
-                <CardDetallePeli infoPeli = {this.state.pelicula}/>
+                <h1 className="alert alert-primary">{pelicula.title}</h1>
+                <CardDetallePeli infoPeli = {pelicula}/>
             </div>
         )
     }
@@ -42,4 +48,4 @@ class DetallePelicula extends Component {
 
 }
 
-export default DetallePelicula;
+export default withRouter(DetallePelicula);

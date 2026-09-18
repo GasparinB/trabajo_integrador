@@ -1,12 +1,12 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-
+import DetallePelicula from "../../Componentes/DetallePelicula/DetallePelicula";
 
 class DetallePelis extends Component {
   render() {
     return (
       <div>
-        <h1>Película nombre</h1>
+        <DetallePelicula/>
       </div>
     );
   }
