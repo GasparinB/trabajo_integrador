@@ -1,16 +1,40 @@
 import React, { Component } from 'react';
 import CardDetallePeli from '../CardDetallePeli/CardDetallePeli';
 import { withRouter } from 'react-router-dom/cjs/react-router-dom.min';
+import Cookies from 'universal-cookie';
 
+
+const cookies = new Cookies();
 class DetallePelicula extends Component {
     constructor(props) {
         super(props)
         this.state = {
             pelicula: null,
+            estaEnFavorito: false,
+            usuarioLogueado: false
         }
     }
     componentDidMount() {
         const movieId = this.props.match.params.id
+
+        const cokieSesion = cookies.get('auth-user')
+        if (cokieSesion) {
+            this.state({
+                usuarioLogueado: true
+            })
+        }
+
+        const favoritoStorage = localStorage.getItem('nombreStorage')
+        if (favoritoStorage !== null) {
+            const listaFavs = JSON.parse(favoritoStorage)
+            if (listaFavs.includes(movieId)){
+                this.setState({
+                    estaEnFavorito: true
+                })
+            }
+        }
+
+
         const url = 'https://api.themoviedb.org/3/movie/' + movieId;
         const options = {
             method: 'GET',
@@ -26,13 +50,39 @@ class DetallePelicula extends Component {
                 this.setState({ pelicula: data});
             })
             .catch(error => console.log(error));
+        }
 
-    }
+        agregoFavorito(id) {
+             const favoritoStorage = localStorage.getItem('favoritosPeliculas')
+             let listaFavs = []
+
+             if (!listaFavs.includes(id)){
+                listaFavs.push(id)
+                localStorage.setItem('favoritosPeliculas', JSON.stringity(listaFavs))
+                this.setState({
+                    estaEnFavorito: true
+                })
+             }
+        };
+        quitoFavorito(id) {
+             const favoritoStorage = localStorage.getItem('favoritosPeliculas')
+             let listaFavs = []
+
+             if (favoritoStorage !== null){
+                listaFavs = JSON.parse(listaFavs)
+             }
+             listaFavs = listaFavs.filter(idFavorito => idFavorito !== id)
+             localStorage.setItem('favoritosPeliculas', JSON.stringify(listaFavs))
+             this.setState({
+                estaEnFavorito: false
+             })
+        }
+    
 
 
 
     render() {
-        const { pelicula } = this.state;
+        const { pelicula, estaEnFavorito, usuarioLogueado } = this.state;
         if (!pelicula) {
             return <p>Cargando...</p>;
         }
@@ -40,12 +90,12 @@ class DetallePelicula extends Component {
         return (
             <div>
                 <h1 className="alert alert-primary">{pelicula.title}</h1>
-                <CardDetallePeli infoPeli = {pelicula}/>
+                <CardDetallePeli infoPeli = {pelicula} esFav = {estaEnFavorito} agregarFav = {this.agregoFavorito} quitarFav = {this.quitoFavorito} userSesion = {usuarioLogueado}/>
             </div>
         )
     }
 
-
 }
+
 
 export default withRouter(DetallePelicula);

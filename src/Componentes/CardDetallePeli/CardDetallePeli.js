@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
-import Favorito from '../Favorito/Favorito';
 
 class CardDetallePeli extends Component {
     render() {
-        const { infoPeli } = this.props
+        const { infoPeli, esFav, agregarFav, quitarFav, userSesion } = this.props
         return (
             
             <section className="row">
@@ -24,6 +23,17 @@ class CardDetallePeli extends Component {
                             ))}
                         </ul> 
                     </div>
+                    {userSesion && esFav ? (
+                        <button onClick={() => quitarFav(infoPeli.id) }> 
+                            Quitar de Favoritos
+                        </button> 
+                    ) :
+                    (
+                        <button onClick={() => agregarFav(infoPeli.id) }> 
+                            Agregar a Favoritos
+                        </button> 
+                    )
+                    }
                 </section>
             </section>
         )
