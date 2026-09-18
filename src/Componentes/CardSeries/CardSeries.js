@@ -84,7 +84,7 @@ class CardSeries extends Component {
                 <p className={this.state.mostrarDescripcion ? 'mostrar' : 'ocultar'}>
                     {this.props.description}
                 </p>
-                <Link className='detail-button' to={`/detalle/serie/${this.props.id}`}>Ver detalle</Link>
+                <Link className='detail-button' to={`/serie/${this.props.id}`}>Ver detalle</Link>
                 {usuarioLogueado !== undefined && (this.state.favorito ? (
                     <button onClick={() => this.sacarDeFavoritos(this.props.id)}>Sacar de favoritos</button>
                     ) : (

@@ -75,7 +75,7 @@ class CardPelicula extends Component {
                     {this.state.mostrarDescripcion ? 'Ocultar descripción' : 'Ver descripción'}
                 </button>
                 <p className={this.state.mostrarDescripcion ? 'mostrar' : 'ocultar'}>{this.props.description}</p>
-                <Link className='detail-button' to={`/detalle/pelicula/${this.props.id}`}>Ver detalle</Link>
+                <Link className='detail-button' to={`/pelicula/${this.props.id}`}>Ver detalle</Link>
                 {usuarioLogueado !== undefined && (this.state.favorito ? (
                     <button onClick={() => this.sacarDeFavoritos(this.props.id)}>Sacar de favoritos</button>
                 ) : (

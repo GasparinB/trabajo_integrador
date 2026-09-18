@@ -7,6 +7,8 @@ import Login from './Screens/Login/Login';
 import CategoriaPeliculasScreen from './Screens/CategoriaPeliculas/CategoriaPeliculas';
 import CategoriaSeriesScreen from './Screens/CategoriaSeries/CategoriaSeries';
 import SearchResults from './Screens/SearchResults/SearchResults';
+import DetallePelis from './Screens/DetallePelis/DetallePelis';
+import DetalleSeries from './Screens/DetalleSeries/DetalleSeries';
 
 function App() {
   return (
@@ -19,7 +21,9 @@ function App() {
           <Route path="/peliculas" component={CategoriaPeliculasScreen} />
           <Route path="/series" component={CategoriaSeriesScreen} />
           <Route path="/search/:busqueda" component={SearchResults} />
-
+          <Route path="/search/:busqueda" component={SearchResults} />
+          <Route path="/pelicula/:id" component={DetallePelis} />
+          <Route path="/serie/:id" component={DetalleSeries} />
         </Switch>
     </div>
 

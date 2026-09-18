@@ -31,10 +31,12 @@ class DetallePelicula extends Component {
 
 
     render() {
-        <div>
-             <h2 class="alert alert-primary">{this.state.pelicula.title}</h2>
-            <CardDetallePeli infoPeli = {this.state.pelicula}/>
-        </div>
+        return (
+            <div>
+                <h2 class="alert alert-primary">{this.state.pelicula.title}</h2>
+                <CardDetallePeli infoPeli = {this.state.pelicula}/>
+            </div>
+        )
     }
 
 
