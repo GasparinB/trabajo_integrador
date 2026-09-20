@@ -24,10 +24,10 @@ class DetallePelicula extends Component {
             })
         }
 
-        const favoritoStorage = localStorage.getItem('nombreStorage')
+        const favoritoStorage = localStorage.getItem('favoritosPeliculas')
         if (favoritoStorage !== null) {
             const listaFavs = JSON.parse(favoritoStorage)
-            if (listaFavs.includes(movieId)){
+            if (listaFavs.map(idFavs => String(idFavs)).includes(String(movieId))){
                 this.setState({
                     estaEnFavorito: true
                 })
@@ -56,8 +56,12 @@ class DetallePelicula extends Component {
              const favoritoStorage = localStorage.getItem('favoritosPeliculas')
              let listaFavs = []
 
-             if (!listaFavs.includes(id)){
-                listaFavs.push(id)
+             if (favoritoStorage !== null){
+                listaFavs = JSON.parse(listaFavs)
+             }
+
+             if (!listaFavs.map(idFavs => String(idFavs)).includes(String(id))){
+                listaFavs.push(String(id))
                 localStorage.setItem('favoritosPeliculas', JSON.stringify(listaFavs))
                 this.setState({
                     estaEnFavorito: true

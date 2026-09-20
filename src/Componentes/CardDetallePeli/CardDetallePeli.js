@@ -19,11 +19,11 @@ class CardDetallePeli extends Component {
                         <p>Géneros:</p> 
                         <ul> 
                             {infoPeli.genres.map((genero) => (
-                                <li>{genero.name}</li>
+                                <li >{genero.name}</li>
                             ))}
                         </ul> 
                     </div>
-                    {userSesion && esFav ? (
+                    {userSesion && ( esFav ? (
                         <button onClick={() => quitarFav(infoPeli.id) }> 
                             Quitar de Favoritos
                         </button> 
@@ -33,7 +33,7 @@ class CardDetallePeli extends Component {
                             Agregar a Favoritos
                         </button> 
                     )
-                    }
+                    )}
                 </section>
             </section>
         )
