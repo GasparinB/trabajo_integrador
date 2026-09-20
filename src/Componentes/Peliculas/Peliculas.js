@@ -23,14 +23,16 @@ class Peliculas extends Component {
         fetch(url, options)
             .then(response => response.json())
             .then(data => {
-                this.setState({ peliculas: data.results });
+                this.setState({ 
+                    peliculas: data.results 
+                });
             })
             .catch(error => console.log(error));
     }
 
     topPopularMovies() {
-        const peliculas = this.state.peliculas;
-        const topMovies = peliculas.filter((pelicula, index) => index < 4);
+        let peliculas = this.state.peliculas;
+        let topMovies = peliculas.filter((pelicula, index) => index < 4);
 
         return topMovies.map(pelicula => (
             <CardPelicula 

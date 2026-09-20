@@ -15,22 +15,23 @@ class CardPelicula extends Component {
     }
 
     componentDidMount() {
-        const favoritos = JSON.parse(localStorage.getItem('favoritosPeliculas'));
+        let favoritos = JSON.parse(localStorage.getItem('favoritosPeliculas'));
 
         if (favoritos !== null) {
-            let idsFavoritos = favoritos.map(favorito => favorito !== null && favorito.id !== undefined ? favorito.id : favorito);
             this.setState({
-                favorito: idsFavoritos.includes(this.props.id) || idsFavoritos.includes(String(this.props.id))
+                favorito: favoritos.includes(this.props.id)
             });
         }
     }
 
     mostrarDescripcion() {
-        this.setState({ mostrarDescripcion: !this.state.mostrarDescripcion });
+        this.setState({ 
+            mostrarDescripcion: !this.state.mostrarDescripcion
+        });
     }
 
     agregarAFavoritos(id) {
-        const favoritos = JSON.parse(localStorage.getItem('favoritosPeliculas'));
+        let favoritos = JSON.parse(localStorage.getItem('favoritosPeliculas'));
 
         if (favoritos !== null) {
             if (!favoritos.includes(id)) {
@@ -44,21 +45,24 @@ class CardPelicula extends Component {
             localStorage.setItem('favoritosPeliculas', guardarFavoritos);
         }
 
-        this.setState({ favorito: true });
+        this.setState({ 
+            favorito: true 
+        });
     }
 
     sacarDeFavoritos(id) {
-        const favoritos = JSON.parse(localStorage.getItem('favoritosPeliculas'));
+        let favoritos = JSON.parse(localStorage.getItem('favoritosPeliculas'));
 
         if (favoritos !== null) {
-            let nuevosFavoritos = favoritos.filter(favorito => {
-                let favoritoId = favorito !== null && favorito.id !== undefined ? favorito.id : favorito;
-                return favoritoId !== id && favoritoId !== String(id);
-            });
+            let nuevosFavoritos = favoritos.filter(favoritoId => favoritoId !== id
+            );
             let guardarFavoritos = JSON.stringify(nuevosFavoritos);
             localStorage.setItem('favoritosPeliculas', guardarFavoritos);
         }
-        this.setState({ favorito: false });
+        this.setState({ 
+            favorito: false 
+        });
+
         if (this.props.onRemoveFavorito !== undefined) {
             this.props.onRemoveFavorito(id);
         }
@@ -76,10 +80,13 @@ class CardPelicula extends Component {
                 </button>
                 <p className={this.state.mostrarDescripcion ? 'mostrar' : 'ocultar'}>{this.props.description}</p>
                 <Link className='detail-button' to={`/pelicula/${this.props.id}`}>Ver detalle</Link>
-                {usuarioLogueado !== undefined && (this.state.favorito ? (
-                    <button onClick={() => this.sacarDeFavoritos(this.props.id)}>Sacar de favoritos</button>
+                {usuarioLogueado ? (
+                    this.state.favorito ? (
+                        <button onClick={() => this.sacarDeFavoritos(this.props.id)}>Sacar de favoritos</button>
+                    ) : (
+                        <button onClick={() => this.agregarAFavoritos(this.props.id)}>Agregar a favoritos</button>)
                 ) : (
-                    <button onClick={() => this.agregarAFavoritos(this.props.id)}>Agregar a favoritos</button>)
+                    ''
                 )}
             </article>
         );

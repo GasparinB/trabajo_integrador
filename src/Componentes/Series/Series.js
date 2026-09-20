@@ -31,8 +31,8 @@ class Series extends Component {
     }
 
     topPopularSeries() {
-        const series = this.state.series;
-        const topSeries = series.filter((serie, index) => index < 4);
+        let series = this.state.series;
+        let topSeries = series.filter((serie, index) => index < 4);
 
         return topSeries.map(serie => (
             <CardSeries
