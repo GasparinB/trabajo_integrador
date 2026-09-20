@@ -1,13 +1,6 @@
 import React, { Component } from 'react';
 import CardSeries from '../CardSeries/CardSeries';
 
-
-/*
-Para cada grupo de contenido de la Home se debe generar una página que debe mostrar todos los contenidos de la sección clickeada y tener las siguientes funcionalidades:
-Cargar más: el endpoint entrega una cantidad fija de resultados. Esta funcionalidad debe mostrar más contenidos al usuario con cada interacción.
-Un formulario de un campo que permita filtrar contenido cargado.
-*/
-
 class CategoriaSeries extends Component {
   constructor(props) {
     super(props);
@@ -22,7 +15,7 @@ class CategoriaSeries extends Component {
     this.cargarSeries();
   }
 
-  cargarSeries = () => {
+  cargarSeries() {
       const url ='https://api.themoviedb.org/3/tv/popular?language=es-ES&page=' + this.state.pagina;
       const options = {
             method: 'GET',
@@ -39,34 +32,34 @@ class CategoriaSeries extends Component {
                 }));
             })
             .catch(error => console.log(error));
-  };
+  }
 
-  cargarMasSeries = () => {
+  cargarMasSeries() {
     this.setState(
       ({ pagina: this.state.pagina + 1 }),
       () => {
         this.cargarSeries();
       }
     );
-  };
+  }
 
-  filtrarContenido = (event) => {
+  filtrarContenido(event) {
     this.setState({ filtro: event.target.value });
-  };
-  getSeriesFiltradas = () => {
+  }
+  getSeriesFiltradas() {
     const { series, filtro } = this.state;
     return series.filter(serie =>
       serie.name.toLowerCase().includes(filtro.toLowerCase())
     );
-  };
+  }
 
-  handleCargarMas = () => {
+  handleCargarMas() {
     this.cargarMasSeries();
-  };
+  }
 
-  handleFiltrar = (event) => {
+  handleFiltrar(event) {
     this.filtrarContenido(event);
-  };
+  }
 
   render() {
     return (
@@ -75,7 +68,7 @@ class CategoriaSeries extends Component {
           type="text"
           placeholder="Filtrar contenido"
           value={this.state.filtro}
-          onChange={this.handleFiltrar}
+          onChange={(event) => this.handleFiltrar(event)}
         />
         <div>
           <h2>Series</h2>
@@ -90,7 +83,7 @@ class CategoriaSeries extends Component {
             ))}
             </div>
         </div>
-        <button onClick={this.handleCargarMas}>Cargar más</button>
+        <button onClick={() => this.handleCargarMas()}>Cargar más</button>
       </div>
     );
   }

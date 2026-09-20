@@ -16,7 +16,7 @@ componentDidMount() {
     this.cargarPeliculas();
   }
 
-  cargarPeliculas = () => {
+  cargarPeliculas() {
         const url = 'https://api.themoviedb.org/3/movie/popular?language=es-ES&page=' + this.state.pagina;
         const options = {
             method: 'GET',
@@ -37,35 +37,35 @@ componentDidMount() {
                 }
             })
             .catch(error => console.log(error));
-  };
+  }
 
-  cargarMasPeliculas = () => {
+  cargarMasPeliculas() {
     this.setState(
       ({ pagina: this.state.pagina + 1 }),
       () => {
         this.cargarPeliculas();
       }
     );
-  };
+  }
 
-  filtrarContenido = (event) => {
+  filtrarContenido(event) {
     this.setState({ filtro: event.target.value });
-  };
+  }
 
-  getPeliculasFiltradas = () => {
+  getPeliculasFiltradas() {
     const { peliculas, filtro } = this.state;
     return peliculas.filter(pelicula =>
       pelicula.title.toLowerCase().includes(filtro.toLowerCase())
     );
-  };
+  }
 
-  handleCargarMas = () => {
+  handleCargarMas() {
     this.cargarMasPeliculas();
-  };
+  }
 
-  handleFiltrar = (event) => {
+  handleFiltrar(event) {
     this.filtrarContenido(event);
-  };
+  }
 
   render() {
     return (
@@ -74,7 +74,7 @@ componentDidMount() {
           type="text"
           placeholder="Filtrar contenido"
           value={this.state.filtro}
-          onChange={this.handleFiltrar}
+          onChange={(event) => this.handleFiltrar(event)}
         />
         <div className="peliculas-container">
             {this.getPeliculasFiltradas().map(pelicula => (
@@ -87,7 +87,7 @@ componentDidMount() {
               />
             ))}
         </div>
-        <button onClick={this.handleCargarMas}>Cargar más</button>
+        <button onClick={() => this.handleCargarMas()}>Cargar más</button>
       </div>
     );
   }

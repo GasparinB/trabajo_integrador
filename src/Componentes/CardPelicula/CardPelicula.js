@@ -25,11 +25,11 @@ class CardPelicula extends Component {
         }
     }
 
-    mostrarDescripcion = () => {
+    mostrarDescripcion() {
         this.setState({ mostrarDescripcion: !this.state.mostrarDescripcion });
     }
 
-    agregarAFavoritos = (id) => {
+    agregarAFavoritos(id) {
         const favoritos = JSON.parse(localStorage.getItem('favoritosPeliculas'));
 
         if (favoritos !== null) {
@@ -47,7 +47,7 @@ class CardPelicula extends Component {
         this.setState({ favorito: true });
     }
 
-    sacarDeFavoritos = (id) => {
+    sacarDeFavoritos(id) {
         const favoritos = JSON.parse(localStorage.getItem('favoritosPeliculas'));
 
         if (favoritos !== null) {
@@ -71,7 +71,7 @@ class CardPelicula extends Component {
             <article className='pelicula-card'>
                 <img src={this.props.image} alt={this.props.title} />
                 <h2>{this.props.title}</h2>
-                <button className='verMas' onClick={this.mostrarDescripcion}>
+                <button className='verMas' onClick={() => this.mostrarDescripcion()}>
                     {this.state.mostrarDescripcion ? 'Ocultar descripción' : 'Ver descripción'}
                 </button>
                 <p className={this.state.mostrarDescripcion ? 'mostrar' : 'ocultar'}>{this.props.description}</p>

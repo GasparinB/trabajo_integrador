@@ -19,7 +19,7 @@ class DetallePelicula extends Component {
 
         const cokieSesion = cookies.get('auth-user')
         if (cokieSesion) {
-            this.state({
+            this.setState({
                 usuarioLogueado: true
             })
         }
@@ -58,7 +58,7 @@ class DetallePelicula extends Component {
 
              if (!listaFavs.includes(id)){
                 listaFavs.push(id)
-                localStorage.setItem('favoritosPeliculas', JSON.stringity(listaFavs))
+                localStorage.setItem('favoritosPeliculas', JSON.stringify(listaFavs))
                 this.setState({
                     estaEnFavorito: true
                 })
@@ -77,7 +77,7 @@ class DetallePelicula extends Component {
                 estaEnFavorito: false
              })
         }
-    
+
 
 
 
@@ -90,7 +90,7 @@ class DetallePelicula extends Component {
         return (
             <div>
                 <h1 className="alert alert-primary">{pelicula.title}</h1>
-                <CardDetallePeli infoPeli = {pelicula} esFav = {estaEnFavorito} agregarFav = {this.agregoFavorito} quitarFav = {this.quitoFavorito} userSesion = {usuarioLogueado}/>
+                <CardDetallePeli infoPeli = {pelicula} esFav = {estaEnFavorito} agregarFav = {(id) => this.agregoFavorito(id)} quitarFav = {(id) => this.quitoFavorito(id)} userSesion = {usuarioLogueado}/>
             </div>
         )
     }
