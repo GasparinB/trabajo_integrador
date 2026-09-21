@@ -1,9 +1,70 @@
 import React, { Component } from 'react';
 import Favorito from '../Favorito/Favorito';
+import Cookies from 'universal-cookie';
+
+const cookies = new Cookies();
 
 class CardDetalleSerie extends Component {
+
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            favorito: false
+        };
+    }
+
+    componentDidMount() {
+        let favoritos = JSON.parse(localStorage.getItem('favoritosSeriez'));
+
+        if (favoritos !== null) {
+            this.setState({
+                favorito: favoritos.includes(this.props.id)
+            });
+        }
+    }
+
+    agregarAFavoritos(id) {
+        let favoritos = JSON.parse(localStorage.getItem('favoritosSeries'));
+
+        if (favoritos !== null) {
+            if (!favoritos.includes(id)) {
+                favoritos.push(id);
+            }
+            let guardarFavoritos = JSON.stringify(favoritos);
+            localStorage.setItem('favoritosSeries', guardarFavoritos);
+        } else {
+            let primerFavorito = [id];
+            let guardarFavoritos = JSON.stringify(primerFavorito);
+            localStorage.setItem('favoritosSeries', guardarFavoritos);
+        }
+
+        this.setState({ 
+            favorito: true 
+        });
+    }
+
+    quitarFavoritos(id) {
+        let favoritos = JSON.parse(localStorage.getItem('favoritosPeliculas'));
+
+        if (favoritos !== null) {
+            let nuevosFavoritos = favoritos.filter(favoritoId => favoritoId !== id
+            );
+            let guardarFavoritos = JSON.stringify(nuevosFavoritos);
+            localStorage.setItem('favoritosPeliculas', guardarFavoritos);
+        }
+        this.setState({ 
+            favorito: false 
+        });
+
+        if (this.props.onRemoveFavorito !== undefined) {
+            this.props.onRemoveFavorito(id);
+        }
+    }
+
     render() {
-        const { infoSerie } = this.props
+        const { infoSerie} = this.props
+        let usuarioLogueado = cookies.get('auth-user')
         return (
             
             <section className="row">
@@ -19,10 +80,23 @@ class CardDetalleSerie extends Component {
                         <p>Géneros:</p> 
                         <ul> 
                             {infoSerie.genres.map((genero) => (
-                                <li>{genero.name}</li>
+                                <li >{genero.name}</li>
                             ))}
                         </ul> 
                     </div>
+                    {usuarioLogueado ? ( this.state.favorito ? (
+                        <button onClick={() => this.quitarFavoritos(infoSerie.id) }> 
+                            Quitar de Favoritos
+                        </button> 
+                    ) :
+                    (
+                        <button onClick={() => this.agregarAFavoritos(infoSerie.id) }> 
+                            Agregar a Favoritos
+                        </button> 
+                    )
+                    ): (
+                        ''
+                    )}
                 </section>
             </section>
         )

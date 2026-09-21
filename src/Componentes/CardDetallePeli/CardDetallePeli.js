@@ -23,7 +23,7 @@ class CardDetallePeli extends Component {
                             ))}
                         </ul> 
                     </div>
-                    {userSesion && ( esFav ? (
+                    {userSesion ? ( esFav ? (
                         <button onClick={() => quitarFav(infoPeli.id) }> 
                             Quitar de Favoritos
                         </button> 
@@ -33,6 +33,8 @@ class CardDetallePeli extends Component {
                             Agregar a Favoritos
                         </button> 
                     )
+                    ): (
+                        ''
                     )}
                 </section>
             </section>

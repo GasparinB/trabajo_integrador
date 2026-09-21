@@ -18,7 +18,7 @@ class DetallePelicula extends Component {
     }
 
     componentDidMount() {
-        let movieId = parseInt(this.props.match.params.id);
+        let movieId = this.props.match.params.id;
 
         const cookieSesion = cookies.get('auth-user')
         if (cookieSesion) {
@@ -69,7 +69,7 @@ class DetallePelicula extends Component {
                 estaEnFavorito: true
             })
         }
-    };
+    }
 
     quitoFavorito(id) {
         let favoritoStorage = localStorage.getItem('favoritosPeliculas')

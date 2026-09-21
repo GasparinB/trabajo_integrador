@@ -3,17 +3,28 @@ import CardDetalleSerie from '../CardDetalleSerie/CardDetalleSerie';
 import { withRouter } from 'react-router-dom';
 import Loader from '../Loader/Loader';
 
+
 class DetalleSerie extends Component {
     constructor(props) {
         super(props)
 
         this.state = {
             serie: null
+            //estaEnFavorito: false,
+            //usuarioLogueado: false
         }
     }
 
     componentDidMount() {
         const serieId = this.props.match.params.id
+
+       
+       // if (cookieSesion) {
+          //  this.setState({
+           //     usuarioLogueado: true
+           // })
+        //}
+
         const url = 'https://api.themoviedb.org/3/tv/' + serieId;
         const options = {
             method: 'GET',
@@ -29,11 +40,12 @@ class DetalleSerie extends Component {
                 this.setState({ serie: data});
             })
             .catch(error => console.log(error));
+
     }
 
-    render() {
-        const { serie } = this.state;
 
+    render() {
+        const { serie } = this.state
         if (!serie) {
             return <Loader />;
         }
@@ -42,7 +54,7 @@ class DetalleSerie extends Component {
             <div>
                 <h1 className="alert alert-primary">{serie.original_name}</h1>
                 <CardDetalleSerie 
-                    infoSerie = {serie}
+                    infoSerie = {serie} 
                 />
             </div>
         )
