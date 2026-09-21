@@ -18,7 +18,7 @@ class DetalleSerie extends Component {
     componentDidMount() {
         const serieId = this.props.match.params.id
 
-       
+
        // if (cookieSesion) {
           //  this.setState({
            //     usuarioLogueado: true
@@ -53,8 +53,8 @@ class DetalleSerie extends Component {
         return (
             <div>
                 <h1 className="alert alert-primary">{serie.original_name}</h1>
-                <CardDetalleSerie 
-                    infoSerie = {serie} 
+                <CardDetalleSerie
+                    infoSerie = {serie}
                 />
             </div>
         )

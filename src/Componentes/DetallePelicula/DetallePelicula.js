@@ -54,40 +54,9 @@ class DetallePelicula extends Component {
             .catch(error => console.log(error));
     }
 
-    agregoFavorito(id) {
-        let favoritoStorage = localStorage.getItem('favoritosPeliculas')
-        let listaFavs = []
-
-        if (favoritoStorage !== null) {
-        listaFavs = JSON.parse(favoritoStorage);
-        }
-
-        if (!listaFavs.includes(id)) {
-            listaFavs.push(id)
-            localStorage.setItem('favoritosPeliculas', JSON.stringify(listaFavs))
-            this.setState({
-                estaEnFavorito: true
-            })
-        }
-    }
-
-    quitoFavorito(id) {
-        let favoritoStorage = localStorage.getItem('favoritosPeliculas')
-        let listaFavs = []
-
-        if (favoritoStorage !== null) {
-            listaFavs = JSON.parse(favoritoStorage);
-        }
-        listaFavs = listaFavs.filter(idFavorito => idFavorito !== id)
-        localStorage.setItem('favoritosPeliculas', JSON.stringify(listaFavs))
-        this.setState({
-            estaEnFavorito: false
-        })
-    }
-
     render() {
         const { pelicula, estaEnFavorito, usuarioLogueado } = this.state;
-        
+
         if (!pelicula) {
             return <Loader />;
         }
@@ -95,11 +64,8 @@ class DetallePelicula extends Component {
         return (
             <div>
                 <h1 className="alert alert-primary">{pelicula.title}</h1>
-                <CardDetallePeli 
-                infoPeli={pelicula} 
-                esFav={estaEnFavorito} 
-                agregarFav={(id) => this.agregoFavorito(id)} 
-                quitarFav={(id) => this.quitoFavorito(id)} 
+                <CardDetallePeli
+                infoPeli={pelicula}
                 userSesion={usuarioLogueado} />
             </div>
         )
