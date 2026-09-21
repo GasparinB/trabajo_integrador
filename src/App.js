@@ -18,21 +18,22 @@ function App() {
   return (
     <div className="App">
       <Header />
-      <Switch>
-        <Route path="/" exact={true} component={Home} />
-        <Route path="/register" component={CrearCuenta} />
-        <Route path="/login" component={Login} />
-        <Route path="/favoritos" component={Favoritos} />
-        <Route path="/peliculas" component={CategoriaPeliculasScreen} />
-        <Route path="/series" component={CategoriaSeriesScreen} />
-        <Route path="/search/:busqueda" component={SearchResults} />
-        <Route path="/pelicula/:id" component={DetallePelis} />
-        <Route path="/serie/:id" component={DetalleSeries} />
-        <Route path="*" component={NotFound} />
-      </Switch>
+        <div className="contenido-principal">
+          <Switch>
+            <Route path="/" exact={true} component={Home} />
+            <Route path="/register" component={CrearCuenta} />
+            <Route path="/login" component={Login} />
+            <Route path="/favoritos" component={Favoritos} />
+            <Route path="/peliculas" component={CategoriaPeliculasScreen} />
+            <Route path="/series" component={CategoriaSeriesScreen} />
+            <Route path="/search/:busqueda" component={SearchResults} />
+            <Route path="/pelicula/:id" component={DetallePelis} />
+            <Route path="/serie/:id" component={DetalleSeries} />
+            <Route path="*" component={NotFound} />
+          </Switch>
+        </div>
       <Footer />
     </div>
-
   );
 }
 

@@ -77,12 +77,12 @@ class CategoriaSeries extends Component {
       <div>
         <input
           type="text"
+          className="filter-input"
           placeholder="Filtrar contenido"
           value={this.state.filtro}
           onChange={(event) => this.handleFiltrar(event)}
         />
         <div>
-          <h2>Series</h2>
           <div className="peliculas-container">
             {this.getSeriesFiltradas().map((serie, index) => (
               <CardSeries
@@ -100,7 +100,7 @@ class CategoriaSeries extends Component {
         ) : (
           ''
         )}
-        <button onClick={() => this.handleCargarMas()}>Cargar más</button>
+        <button className="cargar-mas" onClick={() => this.handleCargarMas()}>Cargar más</button>
       </div>
     );
   }

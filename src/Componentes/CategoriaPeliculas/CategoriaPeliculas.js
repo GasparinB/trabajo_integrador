@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import "./CategoriaPeliculas.css";
 import CardPelicula from "../CardPelicula/CardPelicula";
 import Loader from '../Loader/Loader';
 
@@ -32,6 +31,7 @@ componentDidMount() {
                 Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJlYjgwNDM1YTlmNmY2ODhjYTI2NGE0YmM3ZmM2NjE4NyIsIm5iZiI6MTc4ODc5MTEyNi4yMjMsInN1YiI6IjZhOWVjOTU2MWRmYjExOWJiZTE0NDRkNyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.fNwSmD2dtb7WrrbApwqjIzh_3rP9QsFLDo4sVwxP8nw'
             }
         };
+
         fetch(url, options)
             .then(response => response.json())
             .then(data => {
@@ -80,6 +80,7 @@ componentDidMount() {
       <div>
         <input
           type="text"
+          className="filter-input"
           placeholder="Filtrar contenido"
           value={this.state.filtro}
           onChange={(event) => this.handleFiltrar(event)}
@@ -100,7 +101,7 @@ componentDidMount() {
         ) : (
           ''
         )}
-        <button onClick={() => this.handleCargarMas()}>Cargar más</button>
+        <button className="cargar-mas" onClick={() => this.handleCargarMas()}>Cargar más</button>
       </div>
     );
   }
