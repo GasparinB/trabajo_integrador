@@ -5,7 +5,9 @@ import Navbar from '../Navbar/Navbar';
 function Header() {
     return (
         <header>
-            <Link className="logo" to="/">MovieApp</Link>
+            <Link className="logo" to="/">
+                <img src="/img/cine-daily.png" alt="Cine Daily" />
+            </Link>
             <Navbar />
         </header>
     );

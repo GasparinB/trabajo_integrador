@@ -5,10 +5,8 @@ class CrearCuenta extends Component {
     render() {
         return(
         <main className="auth-screen">
-            <div class="row justify-content-center">
-                <h2 class="alert alert-primary">Registro</h2>
-                <CrearCuentaForm/>
-            </div>
+            <h2 className="alert alert-primary">Registro</h2>
+            <CrearCuentaForm/>
         </main>
         )
     }

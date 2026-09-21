@@ -5,7 +5,7 @@ class Login extends Component {
     render() {
         return(
             <main className="auth-screen">
-                <h2 class="alert alert-primary">Iniciar sesión</h2>
+                <h2 className="alert alert-primary">Iniciar sesión</h2>
                 <LoginForm/>
             </main>
         )
