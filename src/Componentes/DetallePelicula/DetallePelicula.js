@@ -1,39 +1,41 @@
 import React, { Component } from 'react';
 import CardDetallePeli from '../CardDetallePeli/CardDetallePeli';
-import { withRouter } from 'react-router-dom/cjs/react-router-dom.min';
+import { withRouter } from 'react-router-dom';
 import Cookies from 'universal-cookie';
-
+import Loader from '../Loader/Loader';
 
 const cookies = new Cookies();
+
 class DetallePelicula extends Component {
     constructor(props) {
         super(props)
+
         this.state = {
             pelicula: null,
             estaEnFavorito: false,
             usuarioLogueado: false
         }
     }
-    componentDidMount() {
-        const movieId = this.props.match.params.id
 
-        const cokieSesion = cookies.get('auth-user')
-        if (cokieSesion) {
+    componentDidMount() {
+        let movieId = parseInt(this.props.match.params.id);
+
+        const cookieSesion = cookies.get('auth-user')
+        if (cookieSesion) {
             this.setState({
                 usuarioLogueado: true
             })
         }
 
-        const favoritoStorage = localStorage.getItem('favoritosPeliculas')
+        let favoritoStorage = localStorage.getItem('favoritosPeliculas')
         if (favoritoStorage !== null) {
             const listaFavs = JSON.parse(favoritoStorage)
-            if (listaFavs.map(idFavs => String(idFavs)).includes(String(movieId))){
+            if (listaFavs.includes(movieId)) {
                 this.setState({
                     estaEnFavorito: true
                 })
             }
         }
-
 
         const url = 'https://api.themoviedb.org/3/movie/' + movieId;
         const options = {
@@ -47,59 +49,62 @@ class DetallePelicula extends Component {
         fetch(url, options)
             .then(response => response.json())
             .then(data => {
-                this.setState({ pelicula: data});
+                this.setState({ pelicula: data });
             })
             .catch(error => console.log(error));
+    }
+
+    agregoFavorito(id) {
+        let favoritoStorage = localStorage.getItem('favoritosPeliculas')
+        let listaFavs = []
+
+        if (favoritoStorage !== null) {
+        listaFavs = JSON.parse(favoritoStorage);
         }
 
-        agregoFavorito(id) {
-             const favoritoStorage = localStorage.getItem('favoritosPeliculas')
-             let listaFavs = []
-
-             if (favoritoStorage !== null){
-                listaFavs = JSON.parse(listaFavs)
-             }
-
-             if (!listaFavs.map(idFavs => String(idFavs)).includes(String(id))){
-                listaFavs.push(String(id))
-                localStorage.setItem('favoritosPeliculas', JSON.stringify(listaFavs))
-                this.setState({
-                    estaEnFavorito: true
-                })
-             }
-        };
-        quitoFavorito(id) {
-             const favoritoStorage = localStorage.getItem('favoritosPeliculas')
-             let listaFavs = []
-
-             if (favoritoStorage !== null){
-                listaFavs = JSON.parse(listaFavs)
-             }
-             listaFavs = listaFavs.filter(idFavorito => idFavorito !== id)
-             localStorage.setItem('favoritosPeliculas', JSON.stringify(listaFavs))
-             this.setState({
-                estaEnFavorito: false
-             })
+        if (!listaFavs.includes(id)) {
+            listaFavs.push(id)
+            localStorage.setItem('favoritosPeliculas', JSON.stringify(listaFavs))
+            this.setState({
+                estaEnFavorito: true
+            })
         }
+    };
 
+    quitoFavorito(id) {
+        let favoritoStorage = localStorage.getItem('favoritosPeliculas')
+        let listaFavs = []
 
-
+        if (favoritoStorage !== null) {
+            listaFavs = JSON.parse(favoritoStorage);
+        }
+        listaFavs = listaFavs.filter(idFavorito => idFavorito !== id)
+        localStorage.setItem('favoritosPeliculas', JSON.stringify(listaFavs))
+        this.setState({
+            estaEnFavorito: false
+        })
+    }
 
     render() {
         const { pelicula, estaEnFavorito, usuarioLogueado } = this.state;
+        
         if (!pelicula) {
-            return <p>Cargando...</p>;
+            return <Loader />;
         }
 
         return (
             <div>
                 <h1 className="alert alert-primary">{pelicula.title}</h1>
-                <CardDetallePeli infoPeli = {pelicula} esFav = {estaEnFavorito} agregarFav = {(id) => this.agregoFavorito(id)} quitarFav = {(id) => this.quitoFavorito(id)} userSesion = {usuarioLogueado}/>
+                <CardDetallePeli 
+                infoPeli={pelicula} 
+                esFav={estaEnFavorito} 
+                agregarFav={(id) => this.agregoFavorito(id)} 
+                quitarFav={(id) => this.quitoFavorito(id)} 
+                userSesion={usuarioLogueado} />
             </div>
         )
     }
 
 }
-
 
 export default withRouter(DetallePelicula);

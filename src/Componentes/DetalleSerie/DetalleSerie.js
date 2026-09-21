@@ -1,14 +1,17 @@
 import React, { Component } from 'react';
 import CardDetalleSerie from '../CardDetalleSerie/CardDetalleSerie';
-import { withRouter } from 'react-router-dom/cjs/react-router-dom.min';
+import { withRouter } from 'react-router-dom';
+import Loader from '../Loader/Loader';
 
 class DetalleSerie extends Component {
     constructor(props) {
         super(props)
+
         this.state = {
-            serie: null,
+            serie: null
         }
     }
+
     componentDidMount() {
         const serieId = this.props.match.params.id
         const url = 'https://api.themoviedb.org/3/tv/' + serieId;
@@ -26,26 +29,24 @@ class DetalleSerie extends Component {
                 this.setState({ serie: data});
             })
             .catch(error => console.log(error));
-
     }
-
-
 
     render() {
         const { serie } = this.state;
+
         if (!serie) {
-            return <p>Cargando...</p>;
+            return <Loader />;
         }
 
         return (
             <div>
                 <h1 className="alert alert-primary">{serie.original_name}</h1>
-                <CardDetalleSerie infoSerie = {serie}/>
+                <CardDetalleSerie 
+                    infoSerie = {serie}
+                />
             </div>
         )
     }
-
-
 }
 
 export default withRouter(DetalleSerie);

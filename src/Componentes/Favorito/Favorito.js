@@ -3,6 +3,7 @@ import './Favorito.css';
 import CardPelicula from '../CardPelicula/CardPelicula';
 import CardSeries from '../CardSeries/CardSeries';
 import Cookies from 'universal-cookie';
+import Loader from '../Loader/Loader';
 
 const cookies = new Cookies();
 const token = 'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJlYjgwNDM1YTlmNmY2ODhjYTI2NGE0YmM3ZmM2NjE4NyIsIm5iZiI6MTc4ODc5MTEyNi4yMjMsInN1YiI6IjZhOWVjOTU2MWRmYjExOWJiZTE0NDRkNyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.fNwSmD2dtb7WrrbApwqjIzh_3rP9QsFLDo4sVwxP8nw';
@@ -17,9 +18,11 @@ const options = {
 class Favorito extends Component {
   constructor(props) {
     super(props);
+
     this.state = {
       peliculasFavoritas: [],
-      seriesFavoritas: []
+      seriesFavoritas: [],
+      cargando: true
     };
   }
 
@@ -28,6 +31,15 @@ class Favorito extends Component {
     const favoritosSeries = JSON.parse(localStorage.getItem('favoritosSeries')) || [];
     let peliculasCargadas = [];
     let seriesCargadas = [];
+
+    let cantidadFavoritos = favoritosPeliculas.length + favoritosSeries.length;
+    let favoritosCargados = 0;
+
+    if (cantidadFavoritos === 0) {
+        this.setState({
+            cargando: false
+        });
+    }
 
     favoritosPeliculas.map(id => {
       fetch(`https://api.themoviedb.org/3/movie/${id}?language=es-ES`, options)
@@ -38,8 +50,13 @@ class Favorito extends Component {
             this.setState({
               peliculasFavoritas: peliculasCargadas
             });
-          } else {
-            console.log('No se pudo cargar la pelicula favorita', id, data);
+          }
+          favoritosCargados = favoritosCargados + 1;
+          
+          if (favoritosCargados === cantidadFavoritos) {
+            this.setState({
+              cargando: false
+            });
           }
         })
         .catch(error => {
@@ -56,8 +73,13 @@ class Favorito extends Component {
             this.setState({
               seriesFavoritas: seriesCargadas
             });
-          } else {
-            console.log('No se pudo cargar la serie favorita', id, data);
+          } 
+          favoritosCargados = favoritosCargados + 1;
+          
+          if (favoritosCargados === cantidadFavoritos) {
+            this.setState({
+              cargando: false
+            });
           }
         })
         .catch(error => {
@@ -81,8 +103,12 @@ class Favorito extends Component {
   render() {
     const usuarioLogueado = cookies.get('auth-user');
 
-    if (usuarioLogueado === undefined) {
+    if (!usuarioLogueado) {
       return <p>Tenés que iniciar sesión para ver tus favoritos.</p>;
+    }
+
+    if (this.state.cargando) {
+      return <Loader />;
     }
 
     return (

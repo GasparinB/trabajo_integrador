@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import CardPelicula from '../CardPelicula/CardPelicula';
+import Loader from '../Loader/Loader';
 
 class Peliculas extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            peliculas: []
+            peliculas: ''
         };
     }
 
@@ -23,14 +24,16 @@ class Peliculas extends Component {
         fetch(url, options)
             .then(response => response.json())
             .then(data => {
-                this.setState({ peliculas: data.results });
+                this.setState({ 
+                    peliculas: data.results 
+                });
             })
             .catch(error => console.log(error));
     }
 
     topPopularMovies() {
-        const peliculas = this.state.peliculas;
-        const topMovies = peliculas.filter((pelicula, index) => index < 4);
+        let peliculas = this.state.peliculas;
+        let topMovies = peliculas.filter((pelicula, index) => index < 4);
 
         return topMovies.map(pelicula => (
             <CardPelicula 
@@ -45,7 +48,13 @@ class Peliculas extends Component {
 
     render() {
         return(
-            <div className="peliculas-container">{this.topPopularMovies()}</div>
+            <div className="peliculas-container">
+                {this.state.peliculas === '' ? (
+                    <Loader />
+                ) : (
+                    this.topPopularMovies()
+                )}
+            </div>
         );
     }
 }
