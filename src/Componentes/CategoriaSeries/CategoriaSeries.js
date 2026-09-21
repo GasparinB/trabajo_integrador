@@ -1,13 +1,16 @@
 import React, { Component } from 'react';
 import CardSeries from '../CardSeries/CardSeries';
+import Loader from '../Loader/Loader';
 
 class CategoriaSeries extends Component {
   constructor(props) {
     super(props);
+
     this.state = {
       series: [],
       filtro: '',
       pagina: 1,
+      cargando: true
     };
   }
 
@@ -16,22 +19,29 @@ class CategoriaSeries extends Component {
   }
 
   cargarSeries() {
-      const url ='https://api.themoviedb.org/3/tv/popular?language=es-ES&page=' + this.state.pagina;
-      const options = {
-            method: 'GET',
-            headers: {
-                accept: 'application/json',
-                Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJlYjgwNDM1YTlmNmY2ODhjYTI2NGE0YmM3ZmM2NjE4NyIsIm5iZiI6MTc4ODc5MTEyNi4yMjMsInN1YiI6IjZhOWVjOTU2MWRmYjExOWJiZTE0NDRkNyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.fNwSmD2dtb7WrrbApwqjIzh_3rP9QsFLDo4sVwxP8nw'
-            }
-        };
-        fetch(url, options)
-            .then(response => response.json())
-            .then(data => {
-                this.setState(({
-                    series: this.state.series.concat(data.results)
-                }));
-            })
-            .catch(error => console.log(error));
+    
+    this.setState({
+      cargando: true
+    });
+
+    const url = 'https://api.themoviedb.org/3/tv/popular?language=es-ES&page=' + this.state.pagina;
+    const options = {
+      method: 'GET',
+      headers: {
+        accept: 'application/json',
+        Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJlYjgwNDM1YTlmNmY2ODhjYTI2NGE0YmM3ZmM2NjE4NyIsIm5iZiI6MTc4ODc5MTEyNi4yMjMsInN1YiI6IjZhOWVjOTU2MWRmYjExOWJiZTE0NDRkNyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.fNwSmD2dtb7WrrbApwqjIzh_3rP9QsFLDo4sVwxP8nw'
+      }
+    };
+
+    fetch(url, options)
+      .then(response => response.json())
+      .then(data => {
+        this.setState(({
+          series: this.state.series.concat(data.results),
+          cargando: false
+        }));
+      })
+      .catch(error => console.log(error));
   }
 
   cargarMasSeries() {
@@ -46,6 +56,7 @@ class CategoriaSeries extends Component {
   filtrarContenido(event) {
     this.setState({ filtro: event.target.value });
   }
+
   getSeriesFiltradas() {
     const { series, filtro } = this.state;
     return series.filter(serie =>
@@ -73,16 +84,22 @@ class CategoriaSeries extends Component {
         <div>
           <h2>Series</h2>
           <div className="peliculas-container">
-            {this.getSeriesFiltradas().map((serie,index) => (
-                <CardSeries
-                  id={serie.id}
-                  name={serie.name}
-                  image={serie.poster_path !== null ? `https://image.tmdb.org/t/p/w500${serie.poster_path}` : ''}
-                  description={serie.overview !== '' ? serie.overview : 'Descripción no disponible.'}
-                />
+            {this.getSeriesFiltradas().map((serie, index) => (
+              <CardSeries
+                key={serie.id}
+                id={serie.id}
+                title={serie.name}
+                image={serie.poster_path !== null ? `https://image.tmdb.org/t/p/w500${serie.poster_path}` : ''}
+                description={serie.overview !== '' ? serie.overview : 'Descripción no disponible.'}
+              />
             ))}
-            </div>
+          </div>
         </div>
+        {this.state.cargando ? (
+          <Loader />
+        ) : (
+          ''
+        )}
         <button onClick={() => this.handleCargarMas()}>Cargar más</button>
       </div>
     );

@@ -1,3 +1,78 @@
+/* HEADER */
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 15px 30px;
+
+    background-color: #eee;
+}
+
+.logo {
+    font-size: 22px;
+    font-weight: bold;
+
+    color: #333;
+    text-decoration: none;
+}
+
+.main-nav {
+    display: flex;
+    gap: 20px;
+
+    margin: 0;
+    padding: 0;
+}
+
+.main-nav li {
+    list-style: none;
+}
+
+.main-nav a {
+    color: #444;
+    text-decoration: none;
+}
+
+
+/* FOOTER */
+
+footer {
+    margin-top: 40px;
+    padding: 25px;
+
+    background-color: #eee;
+
+    text-align: center;
+}
+
+
+/* NOT FOUND */
+
+.not-found {
+    text-align: center;
+
+    padding: 80px 20px;
+}
+
+.not-found a {
+    display: inline-block;
+
+    margin-top: 15px;
+}
+
+
+/* LOADER */
+
+.peliculas-container > h3 {
+    width: 100%;
+
+    text-align: center;
+
+    padding: 40px 0;
+}
+
 nav {
     display: grid;
     grid-template-columns: 1fr;

@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import CardSeries from '../CardSeries/CardSeries';
+import Loader from '../Loader/Loader';
 
 class Series extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            series: []
+            series: ''
         };
     }
 
@@ -47,7 +48,13 @@ class Series extends Component {
 
     render() {
         return (
-            <div className="peliculas-container">{this.topPopularSeries()}</div>
+            <div className="peliculas-container">
+                {this.state.series === '' ? (
+                    <Loader />
+                ) : (
+                    this.topPopularSeries()
+                )}
+            </div>
         );
     }
 }

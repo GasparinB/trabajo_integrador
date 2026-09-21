@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import CardPelicula from '../CardPelicula/CardPelicula';
+import Loader from '../Loader/Loader';
 
 class Peliculas extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            peliculas: []
+            peliculas: ''
         };
     }
 
@@ -47,7 +48,13 @@ class Peliculas extends Component {
 
     render() {
         return(
-            <div className="peliculas-container">{this.topPopularMovies()}</div>
+            <div className="peliculas-container">
+                {this.state.peliculas === '' ? (
+                    <Loader />
+                ) : (
+                    this.topPopularMovies()
+                )}
+            </div>
         );
     }
 }

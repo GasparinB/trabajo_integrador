@@ -1,14 +1,17 @@
 import React, { Component } from "react";
 import "./CategoriaPeliculas.css";
 import CardPelicula from "../CardPelicula/CardPelicula";
+import Loader from '../Loader/Loader';
 
 class CategoriaPeliculas extends Component {
   constructor(props) {
     super(props);
+
     this.state = {
       peliculas: [],
       filtro: '',
       pagina: 1,
+      cargando: true
     };
   }
 
@@ -17,6 +20,10 @@ componentDidMount() {
   }
 
   cargarPeliculas() {
+        this.setState({
+          cargando: true
+        });
+
         const url = 'https://api.themoviedb.org/3/movie/popular?language=es-ES&page=' + this.state.pagina;
         const options = {
             method: 'GET',
@@ -30,7 +37,8 @@ componentDidMount() {
             .then(data => {
                 if (data.results !== undefined) {
                     this.setState(({
-                        peliculas: this.state.peliculas.concat(data.results)
+                        peliculas: this.state.peliculas.concat(data.results),
+                        cargando: false
                     }));
                 } else {
                     console.log('No se pudieron cargar peliculas', data);
@@ -87,6 +95,11 @@ componentDidMount() {
               />
             ))}
         </div>
+        {this.state.cargando ? (
+          <Loader />
+        ) : (
+          ''
+        )}
         <button onClick={() => this.handleCargarMas()}>Cargar más</button>
       </div>
     );

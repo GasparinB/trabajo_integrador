@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Loader from '../Loader/Loader';
 
 class Search extends Component {
     constructor(props) {
@@ -6,6 +7,7 @@ class Search extends Component {
         this.state = {
             busqueda: '',
             resultados: [],
+            cargando: true
         };
     }
 
@@ -19,17 +21,23 @@ class Search extends Component {
             Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJlYjgwNDM1YTlmNmY2ODhjYTI2NGE0YmM3ZmM2NjE4NyIsIm5iZiI6MTc4ODc5MTEyNi4yMjMsInN1YiI6IjZhOWVjOTU2MWRmYjExOWJiZTE0NDRkNyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.fNwSmD2dtb7WrrbApwqjIzh_3rP9QsFLDo4sVwxP8nw'
             }
         };
+
         fetch(url, options)
             .then(response => response.json())
             .then(data => {
                 this.setState({
                     resultados: data.results || [],
+                    cargando: false
                 });
             })
             .catch(error => console.log(error));
     }
 
     render() {
+        if (this.state.cargando) {
+            return <Loader />;
+        }
+
         return (
             <div>
                 <h2>Resultados de búsqueda</h2>
