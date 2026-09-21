@@ -3,6 +3,7 @@ import { withRouter } from 'react-router-dom';
 import Cookies from 'universal-cookie';
 
 import ElementosNav from '../ElementosNav/ElementosNav';
+import Logout from '../Logout/Logout';
 
 const cookies = new Cookies();
 
@@ -49,6 +50,13 @@ function Navbar() {
                         ruta={elemento.ruta}
                     />
                 ))}
+                {usuarioLogueado ? (
+                    <li>
+                        <Logout />
+                    </li>
+                ) : (
+                    ''
+                )}
             </ul>
         </nav>
     );

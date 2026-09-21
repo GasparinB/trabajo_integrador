@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Link, withRouter } from "react-router-dom/cjs/react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import Cookies from 'universal-cookie';
 
 const cookies = new Cookies()
@@ -59,21 +59,21 @@ class LoginForm extends Component {
 
     render() {
         return (
-            <div class="row justify-content-center">
-                <div class="col-md-6">
+            <div className="row justify-content-center">
+                <div className="col-md-6">
                     <form onSubmit={(e) => this.submit(e)}>
-                        <div class="form-group">
-                            <label for="email">Email</label>
-                            <input type="email" class="form-control" id="email" placeholder="Ingresá tu email" value={this.state.email} onChange={(e) => this.controlarEmail(e)} />
+                        <div className="form-group">
+                            <label htmlFor="email">Email</label>
+                            <input type="email" className="form-control" id="email" placeholder="Ingresá tu email" value={this.state.email} onChange={(e) => this.controlarEmail(e)} />
                         </div>
-                        <div class="form-group">
-                            <label for="password">Contraseña</label>
-                            <input type="password" class="form-control" id="password" placeholder="Ingresá tu contraseña" value={this.state.password} onChange={(e) => this.controlarPass(e)} />
+                        <div className="form-group">
+                            <label htmlFor="password">Contraseña</label>
+                            <input type="password" className="form-control" id="password" placeholder="Ingresá tu contraseña" value={this.state.password} onChange={(e) => this.controlarPass(e)} />
                         </div>
-                        <button type="submit" class="btn btn-primary btn-block">Iniciar sesión</button>
+                        <button type="submit" className="btn btn-primary btn-block">Iniciar sesión</button>
                         <p>{this.state.error}</p>
                     </form>
-                    <p class="mt-3 text-center">¿No tenés cuenta? <Link to="/register">Registrarse</Link></p>
+                    <p className="mt-3 text-center">¿No tenés cuenta? <Link to="/register">Registrarse</Link></p>
                 </div>
             </div>
         )
