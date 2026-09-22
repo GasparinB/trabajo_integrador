@@ -1,0 +1,19 @@
+.loader {
+    width: 100%;
+    padding-top: 45px;
+    padding-bottom: 45px;
+    text-align: center;
+}
+
+.loader h3 {
+    display: inline-block;
+    margin: 0;
+    padding: 10px 24px;
+    background-color: #0d2947;
+    color: #66adf1;
+    border: 1px solid #3f88c5;
+    border-radius: 22px;
+    font-family: "Inter", Arial, sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+}

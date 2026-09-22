@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import CardDetalleSerie from '../CardDetalleSerie/CardDetalleSerie';
 import { withRouter } from 'react-router-dom';
 import Loader from '../Loader/Loader';
+import './DetalleSerie.css';
 
 
 class DetalleSerie extends Component {
@@ -10,20 +11,11 @@ class DetalleSerie extends Component {
 
         this.state = {
             serie: null
-            //estaEnFavorito: false,
-            //usuarioLogueado: false
         }
     }
 
     componentDidMount() {
         const serieId = this.props.match.params.id
-
-
-       // if (cookieSesion) {
-          //  this.setState({
-           //     usuarioLogueado: true
-           // })
-        //}
 
         const url = 'https://api.themoviedb.org/3/tv/' + serieId;
         const options = {

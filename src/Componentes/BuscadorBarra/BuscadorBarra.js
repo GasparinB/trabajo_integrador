@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
+import './BuscadorBarra.css';
 
 class BuscadorBarra extends Component {
     constructor(props) {

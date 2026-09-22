@@ -1,0 +1,70 @@
+.filter-input {
+    width: 50%;
+    margin-left: 25%;
+    margin-top: 12px;
+    margin-bottom: 35px;
+    padding: 12px 18px;
+    background-color: #0a2139;
+    color: #f4f7fb;
+    border: 1px solid #2c5c88;
+    border-radius: 25px;
+    font-family: "Inter", Arial, sans-serif;
+    font-size: 15px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    outline: none;
+}
+
+.filter-input::placeholder {
+    color: #91a8bf;
+}
+
+.peliculas-container {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    gap: 1.33%;
+}
+
+.cargar-mas {
+    width: 16%;
+    margin-left: 42%;
+    margin-top: 15px;
+    margin-bottom: 35px;
+    padding: 11px;
+    background-color: #174a78;
+    color: #f4f7fb;
+    border: 1px solid #3f88c5;
+    border-radius: 22px;
+    font-weight: 700;
+}
+
+.cargar-mas:hover {
+    background-color: #f2c94c;
+    color: #071a2e;
+    border-color: #f2c94c;
+}
+
+@media (max-width: 900px) {
+    .filter-input {
+        width: 70%;
+        margin-left: 15%;
+    }
+
+    .cargar-mas {
+        width: 30%;
+        margin-left: 35%;
+    }
+}
+
+@media (max-width: 600px) {
+    .filter-input {
+        width: 90%;
+        margin-left: 5%;
+    }
+
+    .cargar-mas {
+        width: 70%;
+        margin-left: 15%;
+    }
+}

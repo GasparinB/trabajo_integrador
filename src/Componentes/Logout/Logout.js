@@ -1,6 +1,7 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
 import Cookies from 'universal-cookie';
+import './Logout.css';
 
 const cookies = new Cookies();
 

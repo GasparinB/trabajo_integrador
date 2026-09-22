@@ -1,34 +1,35 @@
 import React, { Component } from 'react';
+import './CardDetallePeli.css';
 
 class CardDetallePeli extends Component {
-  constructor(props) {
-    super(props);
+    constructor(props) {
+        super(props);
 
-    this.state = {
-      estaEnFavorito: false
-    };
-  }
-
-  componentDidMount() {
-    let favoritoStorage = localStorage.getItem('favoritosPeliculas')
-    let listaFavs = []
-
-    if (favoritoStorage !== null) {
-      listaFavs = JSON.parse(favoritoStorage);
+        this.state = {
+            estaEnFavorito: false
+        };
     }
 
-    if (listaFavs.includes(this.props.infoPeli.id)) {
-      this.setState({
-        estaEnFavorito: true
-      })
-    }
-  }
-      agregoFavorito(id) {
+    componentDidMount() {
         let favoritoStorage = localStorage.getItem('favoritosPeliculas')
         let listaFavs = []
 
         if (favoritoStorage !== null) {
-        listaFavs = JSON.parse(favoritoStorage);
+            listaFavs = JSON.parse(favoritoStorage);
+        }
+
+        if (listaFavs.includes(this.props.infoPeli.id)) {
+            this.setState({
+                estaEnFavorito: true
+            })
+        }
+    }
+    agregoFavorito(id) {
+        let favoritoStorage = localStorage.getItem('favoritosPeliculas')
+        let listaFavs = []
+
+        if (favoritoStorage !== null) {
+            listaFavs = JSON.parse(favoritoStorage);
         }
 
         if (!listaFavs.includes(id)) {
@@ -75,23 +76,23 @@ class CardDetallePeli extends Component {
                             ))}
                         </ul>
                     </div>
-                    {userSesion ? ( this.state.estaEnFavorito ? (
-                        <button onClick={() => this.quitoFavorito(infoPeli.id) }>
+                    {userSesion ? (this.state.estaEnFavorito ? (
+                        <button onClick={() => this.quitoFavorito(infoPeli.id)}>
                             Quitar de Favoritos
                         </button>
                     ) :
-                    (
-                        <button onClick={() => this.agregoFavorito(infoPeli.id) }>
-                            Agregar a Favoritos
-                        </button>
-                    )
-                    ): (
+                        (
+                            <button onClick={() => this.agregoFavorito(infoPeli.id)}>
+                                Agregar a Favoritos
+                            </button>
+                        )
+                    ) : (
                         ''
                     )}
                 </section>
             </section>
         )
-}
+    }
 
 
 }

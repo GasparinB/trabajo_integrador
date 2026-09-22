@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import './Favorito.css';
 import CardPelicula from '../CardPelicula/CardPelicula';
 import CardSeries from '../CardSeries/CardSeries';
 import Cookies from 'universal-cookie';
 import Loader from '../Loader/Loader';
+import './Favorito.css';
 
 const cookies = new Cookies();
 const token = 'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJlYjgwNDM1YTlmNmY2ODhjYTI2NGE0YmM3ZmM2NjE4NyIsIm5iZiI6MTc4ODc5MTEyNi4yMjMsInN1YiI6IjZhOWVjOTU2MWRmYjExOWJiZTE0NDRkNyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.fNwSmD2dtb7WrrbApwqjIzh_3rP9QsFLDo4sVwxP8nw';

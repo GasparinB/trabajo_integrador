@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Loader from '../Loader/Loader';
 import CardSeries from '../CardSeries/CardSeries';
 import CardPelicula from '../CardPelicula/CardPelicula';
+import './Search.css';
 
 class Search extends Component {
     constructor(props) {
@@ -44,7 +45,7 @@ class Search extends Component {
         return (
             <div className="search-results">
                 <h1>Resultados para: {this.state.busqueda}</h1>
-                
+
                 <section className="grupo-resultados">
                     <h2>Películas</h2>
                     <div className="peliculas-container">

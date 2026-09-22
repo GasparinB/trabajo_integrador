@@ -3,6 +3,7 @@ import CardDetallePeli from '../CardDetallePeli/CardDetallePeli';
 import { withRouter } from 'react-router-dom';
 import Cookies from 'universal-cookie';
 import Loader from '../Loader/Loader';
+import './DetallePelicula.css';
 
 const cookies = new Cookies();
 

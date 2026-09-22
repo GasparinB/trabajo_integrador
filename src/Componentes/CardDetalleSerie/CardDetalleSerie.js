@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Favorito from '../Favorito/Favorito';
 import Cookies from 'universal-cookie';
+import './CardDetalleSerie.css';
 
 const cookies = new Cookies();
 
@@ -15,19 +16,19 @@ class CardDetalleSerie extends Component {
     }
 
     componentDidMount() {
-    let favoritoStorage = localStorage.getItem('favoritosSeries')
-    let listaFavs = []
+        let favoritoStorage = localStorage.getItem('favoritosSeries')
+        let listaFavs = []
 
-    if (favoritoStorage !== null) {
-      listaFavs = JSON.parse(favoritoStorage);
-    }
+        if (favoritoStorage !== null) {
+            listaFavs = JSON.parse(favoritoStorage);
+        }
 
-    if (listaFavs.includes(this.props.infoSerie.id)) {
-      this.setState({
-        favorito: true
-      })
+        if (listaFavs.includes(this.props.infoSerie.id)) {
+            this.setState({
+                favorito: true
+            })
+        }
     }
-  }
 
     agregarAFavoritos(id) {
         let favoritos = JSON.parse(localStorage.getItem('favoritosSeries'));
@@ -64,7 +65,7 @@ class CardDetalleSerie extends Component {
     }
 
     render() {
-        const { infoSerie} = this.props
+        const { infoSerie } = this.props
         let usuarioLogueado = cookies.get('auth-user')
         return (
 
@@ -85,25 +86,23 @@ class CardDetalleSerie extends Component {
                             ))}
                         </ul>
                     </div>
-                    {usuarioLogueado ? ( this.state.favorito ? (
-                        <button onClick={() => this.quitarFavoritos(infoSerie.id) }>
+                    {usuarioLogueado ? (this.state.favorito ? (
+                        <button onClick={() => this.quitarFavoritos(infoSerie.id)}>
                             Quitar de Favoritos
                         </button>
                     ) :
-                    (
-                        <button onClick={() => this.agregarAFavoritos(infoSerie.id) }>
-                            Agregar a Favoritos
-                        </button>
-                    )
-                    ): (
+                        (
+                            <button onClick={() => this.agregarAFavoritos(infoSerie.id)}>
+                                Agregar a Favoritos
+                            </button>
+                        )
+                    ) : (
                         ''
                     )}
                 </section>
             </section>
         )
-}
-
-
+    }
 }
 
 export default CardDetalleSerie

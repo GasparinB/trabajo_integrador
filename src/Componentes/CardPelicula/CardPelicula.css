@@ -1,0 +1,102 @@
+.pelicula-card {
+    width: 24%;
+    display: flex;
+    flex-direction: column;
+    padding: 16px;
+    margin-bottom: 30px;
+    background-color: #0d2947;
+    border: 1px solid #28547d;
+    border-radius: 16px;
+    box-shadow: 0 7px 18px rgba(0, 0, 0, 0.3);
+}
+
+.pelicula-card:hover {
+    border-color: #f2c94c;
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.42);
+}
+
+.pelicula-card img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 11px;
+}
+
+.pelicula-card h2 {
+    min-height: 58px;
+    margin-top: 16px;
+    margin-bottom: 12px;
+    padding: 0;
+    border: none;
+    color: #f4f7fb;
+    font-family: "Inter", Arial, sans-serif;
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 1.35;
+    text-align: left;
+}
+
+.pelicula-card p {
+    color: #ccd8e5;
+    font-size: 14px;
+    line-height: 1.55;
+}
+
+.pelicula-card button {
+    width: 100%;
+    min-height: 42px;
+    margin-top: 8px;
+    margin-right: 0;
+    margin-bottom: 8px;
+}
+
+.pelicula-card .verMas {
+    margin-top: auto;
+}
+
+.ocultar {
+    display: none;
+}
+
+.mostrar {
+    display: block;
+}
+
+.detail-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    min-height: 42px;
+    margin-top: 8px;
+    margin-right: 0;
+    margin-bottom: 8px;
+    padding: 9px 17px;
+    background-color: #12385d;
+    color: #f4f7fb;
+    border: 1px solid #3f88c5;
+    border-radius: 20px;
+    font-family: "Inter", Arial, sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    text-align: center;
+}
+
+.detail-button:hover {
+    background-color: #f2c94c;
+    color: #071a2e;
+    border-color: #f2c94c;
+}
+
+@media (max-width: 900px) {
+    .pelicula-card {
+        width: 48%;
+    }
+}
+
+@media (max-width: 600px) {
+    .pelicula-card {
+        width: 100%;
+    }
+}

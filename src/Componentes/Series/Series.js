@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import CardSeries from '../CardSeries/CardSeries';
 import Loader from '../Loader/Loader';
+import './Series.css';
 
 class Series extends Component {
     constructor(props) {

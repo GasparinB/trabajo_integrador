@@ -1,0 +1,12 @@
+.main-nav button {
+    background-color: #102f50;
+    color: #f4f7fb;
+    border: 1px solid #3f88c5;
+    border-radius: 20px;
+}
+
+.main-nav button:hover {
+    background-color: #f2c94c;
+    color: #071a2e;
+    border-color: #f2c94c;
+}
