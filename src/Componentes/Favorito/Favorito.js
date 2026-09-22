@@ -52,7 +52,7 @@ class Favorito extends Component {
             });
           }
           favoritosCargados = favoritosCargados + 1;
-          
+
           if (favoritosCargados === cantidadFavoritos) {
             this.setState({
               cargando: false
@@ -73,9 +73,9 @@ class Favorito extends Component {
             this.setState({
               seriesFavoritas: seriesCargadas
             });
-          } 
+          }
           favoritosCargados = favoritosCargados + 1;
-          
+
           if (favoritosCargados === cantidadFavoritos) {
             this.setState({
               cargando: false
@@ -116,9 +116,9 @@ class Favorito extends Component {
         <h2>Películas favoritas</h2>
         <section className="favoritosContainer">
           {this.state.peliculasFavoritas.length > 0 ? (
-            this.state.peliculasFavoritas.map(pelicula => (
+            this.state.peliculasFavoritas.map((pelicula,index) => (
               <CardPelicula
-                key={pelicula.id}
+                key={pelicula.id+index}
                 id={pelicula.id}
                 title={pelicula.title}
                 image={pelicula.poster_path !== null ? `https://image.tmdb.org/t/p/w500${pelicula.poster_path}` : ''}
@@ -134,9 +134,9 @@ class Favorito extends Component {
         <h2>Series favoritas</h2>
         <section className="favoritosContainer">
           {this.state.seriesFavoritas.length > 0 ? (
-            this.state.seriesFavoritas.map(serie => (
+            this.state.seriesFavoritas.map((serie,index) => (
               <CardSeries
-                key={serie.id}
+                key={serie.id+index}
                 id={serie.id}
                 title={serie.name}
                 image={serie.poster_path !== null ? `https://image.tmdb.org/t/p/w500${serie.poster_path}` : ''}

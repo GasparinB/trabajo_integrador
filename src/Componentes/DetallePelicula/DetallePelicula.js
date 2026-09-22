@@ -56,7 +56,7 @@ class DetallePelicula extends Component {
     }
 
     render() {
-        const { pelicula, estaEnFavorito, usuarioLogueado } = this.state;
+        const { pelicula, usuarioLogueado } = this.state;
 
         if (!pelicula) {
             return <Loader />;

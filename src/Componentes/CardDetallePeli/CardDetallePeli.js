@@ -71,8 +71,8 @@ class CardDetallePeli extends Component {
                     <div>
                         <p>Géneros:</p>
                         <ul>
-                            {infoPeli.genres.map((genero) => (
-                                <li >{genero.name}</li>
+                            {infoPeli.genres.map((genero,index) => (
+                                <li key={index}>{genero.name}</li>
                             ))}
                         </ul>
                     </div>

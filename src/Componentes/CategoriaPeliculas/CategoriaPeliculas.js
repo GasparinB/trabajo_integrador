@@ -87,9 +87,9 @@ componentDidMount() {
           onChange={(event) => this.handleFiltrar(event)}
         />
         <div className="peliculas-container">
-            {this.getPeliculasFiltradas().map(pelicula => (
+            {this.getPeliculasFiltradas().map((pelicula,index) => (
               <CardPelicula
-                key={pelicula.id}
+                key={pelicula.id+index}
                 id={pelicula.id}
                 title={pelicula.title}
                 image={pelicula.poster_path !== null ? `https://image.tmdb.org/t/p/w500${pelicula.poster_path}` : ''}

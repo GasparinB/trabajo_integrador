@@ -77,7 +77,7 @@ class Search extends Component {
                             if (resultado.media_type === 'tv') {
                                 return (
                                     <CardSeries
-                                        key={index}
+                                        key={resultado.id+index}
                                         id={resultado.id}
                                         title={resultado.name}
                                         image={`https://image.tmdb.org/t/p/w500${resultado.poster_path}`}

@@ -36,9 +36,9 @@ class Series extends Component {
         let series = this.state.series;
         let topSeries = series.filter((serie, index) => index < 4);
 
-        return topSeries.map(serie => (
+        return topSeries.map((serie,index) => (
             <CardSeries
-                key={serie.id}
+                key={serie.id+index}
                 id={serie.id}
                 title={serie.name}
                 image={`https://image.tmdb.org/t/p/w500${serie.poster_path}`}

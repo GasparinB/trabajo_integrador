@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import Favorito from '../Favorito/Favorito';
 import Cookies from 'universal-cookie';
 import './CardDetalleSerie.css';
 
@@ -81,8 +80,8 @@ class CardDetalleSerie extends Component {
                     <div>
                         <p>Géneros:</p>
                         <ul>
-                            {infoSerie.genres.map((genero) => (
-                                <li >{genero.name}</li>
+                            {infoSerie.genres.map((genero,index) => (
+                                <li key={index}>{genero.name}</li>
                             ))}
                         </ul>
                     </div>

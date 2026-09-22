@@ -25,8 +25,8 @@ class Peliculas extends Component {
         fetch(url, options)
             .then(response => response.json())
             .then(data => {
-                this.setState({ 
-                    peliculas: data.results 
+                this.setState({
+                    peliculas: data.results
                 });
             })
             .catch(error => console.log(error));
@@ -36,10 +36,10 @@ class Peliculas extends Component {
         let peliculas = this.state.peliculas;
         let topMovies = peliculas.filter((pelicula, index) => index < 4);
 
-        return topMovies.map(pelicula => (
-            <CardPelicula 
-                key={pelicula.id} 
-                id={pelicula.id} 
+        return topMovies.map((pelicula,index) => (
+            <CardPelicula
+                key={pelicula.id+index}
+                id={pelicula.id}
                 title={pelicula.title}
                 image={`https://image.tmdb.org/t/p/w500${pelicula.poster_path}`}
                 description={pelicula.overview !== '' ? pelicula.overview : 'Descripción no disponible.'}

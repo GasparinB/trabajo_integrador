@@ -20,7 +20,7 @@ class CategoriaSeries extends Component {
   }
 
   cargarSeries() {
-    
+
     this.setState({
       cargando: true
     });
@@ -87,7 +87,7 @@ class CategoriaSeries extends Component {
           <div className="peliculas-container">
             {this.getSeriesFiltradas().map((serie, index) => (
               <CardSeries
-                key={serie.id}
+                key={serie.id+index}
                 id={serie.id}
                 title={serie.name}
                 image={serie.poster_path !== null ? `https://image.tmdb.org/t/p/w500${serie.poster_path}` : ''}
